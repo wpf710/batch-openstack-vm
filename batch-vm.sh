@@ -47,6 +47,9 @@ function create_vm_monitor()
 
 }
 
+vms=()
+vols=()
+
 pre_ip=""
 i=1
 while true;do
@@ -119,13 +122,26 @@ while true;do
 
 
    echo -n "waiting for the ssh to be availale"
-   # progress bar
+   ssh_failed="true"
    for j in $(seq 60)
    do
-        echo -n "."
-        sleep 1
-   done  
-   echo 'OK!'
+     echo -n "."
+     ip netns exec qdhcp-$net nmap $vm_ip -PN -p ssh 2>&1 | grep open >> /dev/null
+  
+     result=$?
+     if [[ $result -eq 0 ]]; then
+       echo
+       echo "SSH OK"
+       ssh_failed="false"
+       break
+     fi
+     sleep 1
+   done
+
+   if [[ $ssh_failed == "true" ]]; then
+    echo "SSH Failed"
+    exit 1
+   fi
 
    sed -i /$vm_ip/d /root/.ssh/known_hosts >> /dev/null
 
