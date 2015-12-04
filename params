@@ -1,0 +1,23 @@
+#running parameters
+#it should be in correct unix Shell format (no spaces either side of the equals sign and variables in quotes)
+
+vm_count=50
+image="centos65-socket"
+flavor="5"
+net="29d4780f-319d-43e8-8f18-b98f8b578a2a"
+
+vm_password='abcdefg'
+#zabbix server ip addr
+zb_server="10.168.91.9"
+
+#prefix for the vm name
+name_prefix="fdd"
+
+vol_size=100
+keep_running="true"
+
+#by default,about every 1.5 minutes, one vm will be created.
+#slow down it by seconds
+slow_down=30
+#randomly slow down within the slow_down
+randomly_slow_down="true"
