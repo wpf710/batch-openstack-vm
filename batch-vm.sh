@@ -143,8 +143,6 @@ while true;do
     exit 1
    fi
 
-   sed -i /$vm_ip/d /root/.ssh/known_hosts >> /dev/null
-
    #create volume
    vol_name='vol-'$vm_name
    echo -n 'create volume '$vol_name
@@ -189,6 +187,7 @@ while true;do
    nova volume-attach $vm_id $vol_id >>/dev/null
    echo 'mounting volume.....'
 
+   sed -i /$vm_ip/d /root/.ssh/known_hosts
 
    ./set_trust.sh $vm_ip $net $vm_password >> /dev/null
 
